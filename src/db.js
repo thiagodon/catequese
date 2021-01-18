@@ -16,15 +16,14 @@ const app = firebase.initializeApp({
 
 export const db = app.firestore();
 export const catechists = db.collection('catechists');
-export const catechizing = db.collection('catechizing');
-export const enrollment = db.collection('enrollment');
-export const rooms = db.collection('rooms');
+export const catechizings = db.collection('catechizings');
 export const locations = db.collection('locations');
+export const rooms = db.collection('rooms');
 export const groups = db.collection('groups');
 export const levels = db.collection('levels');
-export const classes = db.collection('classes');
 export const days = db.collection('days');
-export const schedules = db.collection('schedules');
+export const classes = db.collection('classes');
+export const enrollment = db.collection('enrollment');
 
 firebase.auth().onAuthStateChanged(user => {
   store.dispatch("fetchUser", user);

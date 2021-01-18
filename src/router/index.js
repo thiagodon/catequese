@@ -74,6 +74,38 @@ const routes = [
       requiresAuth: true
     }
   },
+  {
+    path: '/catequizandos',
+    name: 'catechizings',
+    component: () => import('../components/catechizings/CatechizingsList.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/salas',
+    name: 'rooms',
+    component: () => import('../components/rooms/RoomsList.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/turmas',
+    name: 'classes',
+    component: () => import('../components/classes/ClassesList.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/matriculas',
+    name: 'enrollments',
+    component: () => import('../components/catechizings/EnrollmentsStart.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
 ]
 
 const router = new VueRouter({

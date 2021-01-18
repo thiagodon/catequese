@@ -95,6 +95,31 @@ export default {
       msg: "",
     };
   },
+  created(){
+    // let start = 0;
+    // let end = 30
+    // for (let i = start; i <= end; i++) {
+
+    //     catechists.add({
+    //       name: "Catequista"+" "+i,
+    //       birth_date: i+"/05/1990",
+    //       phone: 98672681+i,
+    //       email: "email"+1+'@email.com', 
+    //       created_by: firebase.auth().currentUser.displayName,
+    //       created_at: firebase.firestore.Timestamp.fromDate(new Date()),
+    //       selected: false
+    //     })
+    //     .then(function(docRef) {
+    //       alert('Dados enviados com sucesso!')
+    //       // eslint-disable-next-lin
+    //       console.error("Document written with ID: ", docRef.id);
+    //     })
+    //     .catch(function(error) {
+    //       // eslint-disable-next-lin
+    //       console.error("Error adding document: ", error);
+    //     });
+    // }
+  },
   methods: {
     close() {
       this.$emit("close");
@@ -144,6 +169,7 @@ export default {
           obs: this.catechist.obs,
           created_by: firebase.auth().currentUser.displayName,
           created_at: firebase.firestore.Timestamp.fromDate(new Date()),
+          selected: false,
         })
         .then(function(docRef) {
           alert('Dados enviados com sucesso!')

@@ -34,6 +34,10 @@
         <router-link class="nav-link" to="/niveis">Niveis</router-link>
         <router-link class="nav-link" to="/dias">Dias e Horários</router-link>
         <router-link class="nav-link" to="/catequistas">Catequistas</router-link>
+        <router-link class="nav-link" to="/catequizandos">Catequizandos</router-link>
+        <router-link class="nav-link" to="/salas">Salas</router-link>
+        <router-link class="nav-link" to="/turmas">Turmas</router-link>
+        <router-link class="nav-link" to="/matriculas">Matrículas</router-link>
       </nav>
     </div>
 

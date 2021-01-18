@@ -1,37 +1,38 @@
 <template>
-  <transition id="LevelsForm" name="modal">
+  <transition id="RoomsForm" name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
           <form>
             <div class="modal-header">
-              <slot name="header"> Cadastro de Níveis</slot>
+              <slot name="header"> Cadastro de Salas </slot>
             </div>
+
             <div class="modal-body">
               <div class="form-group">
                 <label for="name">Nome</label>
                 <input
                   type="text"
-                  v-model="level.name"
+                  v-model="room.name"
                   class="form-control"
                   id="name"
-                  aria-describedby="Nível"
-                  placeholder="Nível"
+                  aria-describedby="nome"
+                  placeholder="Nome/Número da Sala"
                   required
                 />
                 <small id="emailHelp" class="form-text text-muted"
-                  >Nome do Nível!</small
+                  >Nome/Número da Sala!</small
                 >
               </div>
               <div class="form-group">
-                <label for="name">Nível Maior</label>
-                <select class="form-control" v-model="level.group">
-                  <option v-for="group in groupsList" :key="group.id" v-bind:value="group">
-                    {{ group.name }}
+                <label for="name">Comunidade</label>
+                <select class="form-control" v-model="room.location">
+                  <option v-for="location in locationsList" :key="location.id" v-bind:value="location">
+                    {{ location.name }}
                   </option>
                 </select>
                 <small id="emailHelp" class="form-text text-muted"
-                  >Nome do Nível Maior!</small
+                  >Comunidade!</small
                 >
               </div>
               <div class="alert alert-warning" role="alert" v-if="msg">
@@ -44,7 +45,7 @@
                 <button
                   type="submit"
                   class="btn btn-primary"
-                  @click.prevent="add(level)"
+                  @click.prevent="add(room)"
                 >
                   Salvar Informações
                 </button>
@@ -61,17 +62,17 @@
 </template>
 
 <script>
-import { levels, groups } from "../../db";
+import { rooms, locations } from "../../db";
 import firebase from "firebase/app";
 require("firebase/auth");
 
 export default {
-  name: "LevelsForm",
-  props: ["level"],
+  name: "RoomsForm",
+  props: ["room"],
   data() {
     return {
-      groupsList: [],
       msg: "",
+      locationsList: [],
     };
   },
   created() {
@@ -79,14 +80,13 @@ export default {
   },
   methods: {
     formsCreate(){
-      groups
+      locations
         .onSnapshot((snapshotChange) => {
-          this.groupsList = [];
+          this.locationsList = [];
           snapshotChange.forEach((doc) => {
-            this.groupsList.push({
+            this.locationsList.push({
               id: doc.id,
               name: doc.data().name,
-              order: doc.data().order,
             });
             console.log(doc.id, " => ", doc.data());
           });
@@ -97,33 +97,35 @@ export default {
     },
     add() {
       this.msg = false;
-      if (this.level.name == "" || this.level.group == "") {
+      if (this.room.name == "" || this.room.location == "") {
         this.msg = true;
         return;
       }
-      if (this.level.id) {
-        levels
-          .doc(this.level.id)
+      if (this.room.id) {
+        rooms
+          .doc(this.room.id)
           .update({
-            name: this.level.name,
-            group: this.level.group,
+            name: this.room.name,
+            location: this.room.location,
             updated_by: firebase.auth().currentUser.displayName,
             updated_at: firebase.firestore.Timestamp.fromDate(new Date()),
           })
           .then(function () {
             alert("Dados enviados com sucesso!");
             // eslint-disable-next-lin
-            console.error("Document written with ID: ", this.level.id);
+            console.error("Document written with ID: ", this.room.id);
           })
           .catch(function (error) {
             // eslint-disable-next-lin
             console.error("Error adding document: ", error);
           });
       } else {
-        levels
+        rooms
           .add({
-            name: this.level.name,
-            group: this.level.group,
+            name: this.room.name,
+            location: this.room.location,
+            available: true,
+            classe: '',
             created_by: firebase.auth().currentUser.displayName,
             created_at: firebase.firestore.Timestamp.fromDate(new Date()),
           })
